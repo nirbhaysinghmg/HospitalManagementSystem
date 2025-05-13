@@ -1,0 +1,33 @@
+{
+  "patients": {
+    "P12345": {
+      "id": "P12345",
+      "name": "John Doe",
+      "date_of_birth": "1980-05-15",
+      "upcoming_appointments": ["AP78901"],
+      "recent_visits": [
+        {
+          "date": "2023-10-15",
+          "department": "cardiology",
+          "reason": "Annual checkup"
+        }
+      ]
+    }
+  },
+  "appointments": {
+    "AP78901": {
+      "id": "AP78901",
+      "patient_id": "P12345",
+      "department": "cardiology",
+      "doctor": "Dr. Smith",
+      "datetime": "2023-12-10T14:30:00",
+      "status": "scheduled"
+    }
+  },
+  "departments": {
+    "cardiology": { "name": "Cardiology", "floor": 2 },
+    "neurology": { "name": "Neurology", "floor": 3 },
+    "pediatrics": { "name": "Pediatrics", "floor": 1 },
+    "radiology": { "name": "Radiology", "floor": 2 }
+  }
+}

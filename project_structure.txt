@@ -1,0 +1,12 @@
+healthcare-ai-assistant/
+├── app/
+│   ├── __init__.py
+│   ├── main.py              # FastAPI application
+│   ├── models/              # Data models
+│   ├── services/            # Business logic
+│   │   ├── gemini_service.py  # Gemini AI integration
+│   │   └── hms_service.py   # Hospital Management System integration
+│   └── routers/             # API endpoints
+├── config/                  # Configuration files
+├── tests/                   # Unit tests
+└── requirements.txt         # Dependencies

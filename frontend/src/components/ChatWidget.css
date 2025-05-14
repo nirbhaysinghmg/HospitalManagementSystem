@@ -2,10 +2,10 @@
 
 /* === Chat Widget Container === */
 #chatbot .chat-widget {
-  --primary-color: #0066cc;
-  --primary-light: rgba(0, 102, 204, 0.1);
-  --primary-dark: #0052a3;
-  --shadow-color: rgba(0, 102, 204, 0.15);
+  --primary-color: #004aad;
+  --primary-light: rgba(0, 74, 173, 0.1);
+  --primary-dark: #003785;
+  --shadow-color: rgba(0, 74, 173, 0.15);
   --text-primary: #333333;
   --text-secondary: #666666;
   --bg-light: #f8fafd;
@@ -30,7 +30,7 @@
   transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
   transform-origin: bottom right;
   animation: chatWidgetAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  overscroll-behavior: contain;
+  overscroll-behavior: contain; /* Prevent scroll chaining */
   touch-action: pan-y;
 }
 
@@ -59,7 +59,11 @@
   display: flex;
   align-items: center;
   padding: 16px 20px;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--primary-dark) 100%
+  );
   border-bottom: none;
   border-radius: 16px 16px 0 0;
   margin: 0;
@@ -143,8 +147,9 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 102, 204, 0.3) transparent;
   -webkit-overflow-scrolling: touch;
-  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(248, 250, 253, 0.8)),
-    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23dbe1e9' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
+  overscroll-behavior: contain; /* Prevent scroll chaining */
+  position: relative;
+  z-index: 1;
 }
 
 #chatbot .chat-content::-webkit-scrollbar {
@@ -284,18 +289,41 @@
   line-height: 1.4;
   padding: 0.75rem 1rem;
   transition: all 0.2s ease;
-  max-height: 120px;
+  height: 55px;
   overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+#chatbot .chat-input::-webkit-scrollbar {
+  display: none;
+}
+
+/* Only show scrollbar when content overflows and user is actively interacting */
+#chatbot .chat-input:focus::-webkit-scrollbar {
+  display: block;
+  width: 4px;
 }
 
 #chatbot .chat-input:focus {
+  scrollbar-width: thin; /* Firefox */
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+  box-shadow: 0 0 0 2px rgba(0, 74, 173, 0.1);
   background-color: white;
 }
 
+#chatbot .chat-input:focus::-webkit-scrollbar-thumb {
+  background: rgba(0, 74, 173, 0.3);
+  border-radius: 4px;
+}
+
+#chatbot .chat-input:focus::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 #chatbot .chat-input::placeholder {
-  color: rgba(0, 102, 204, 0.6);
+  color: rgba(0, 74, 173, 0.6);
   font-style: italic;
 }
 
@@ -303,7 +331,11 @@
   flex: 0 0 auto;
   margin: 0;
   background-color: var(--primary-color);
-  background-image: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  background-image: linear-gradient(
+    135deg,
+    var(--primary-color) 0%,
+    var(--primary-dark) 100%
+  );
   border: none;
   border-radius: 50%;
   width: 44px;
@@ -397,7 +429,9 @@
 }
 
 @keyframes typing-bounce {
-  0%, 80%, 100% {
+  0%,
+  80%,
+  100% {
     transform: translateY(0);
     opacity: 0.4;
   }
@@ -410,27 +444,57 @@
 /* Fullscreen mode */
 #chatbot .chat-widget.fullscreen {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  border-radius: 0;
-  animation: expandFullscreen 0.3s ease;
+  top: 5vh; /* 5% space from top */
+  bottom: 5vh; /* 5% space from bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90vw; /* 90% of viewport width */
+  max-width: 1200px; /* Maximum width */
+  height: 90vh; /* 90% of viewport height */
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  border: none;
+  animation: expandFullscreen 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   z-index: 10000;
 }
 
 @keyframes expandFullscreen {
   from {
     opacity: 0.8;
-    transform: scale(0.95);
+    transform: translateX(-50%) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateX(-50%) scale(1);
   }
+}
+
+/* Add a semi-transparent overlay behind the fullscreen chatbot */
+#chatbot .chat-widget.fullscreen::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Adjust header in fullscreen mode */
+#chatbot .chat-widget.fullscreen .chat-header {
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+/* Ensure the content area has proper padding in fullscreen */
+#chatbot .chat-widget.fullscreen .chat-content {
+  padding: 1.5rem 2rem;
+}
+
+/* Improve the input area in fullscreen mode */
+#chatbot .chat-widget.fullscreen .chat-input-area {
+  padding: 1.25rem 2rem;
 }
 
 /* Chat launcher button styling */
@@ -472,24 +536,24 @@
     height: 100%;
     border-radius: 0;
   }
-  
+
   #chatbot .chat-header {
     border-radius: 0;
     padding: 14px 16px;
   }
-  
+
   #chatbot .chat-content {
     padding: 1rem;
   }
-  
+
   #chatbot .chat-input-area {
     padding: 0.75rem 1rem;
   }
-  
+
   #chatbot .fullscreen-button {
     display: none;
   }
-  
+
   #healthcare-ai-button {
     bottom: 16px;
     right: 16px;
@@ -542,7 +606,7 @@
   color: #333;
 }
 
-#chatbot .message ul, 
+#chatbot .message ul,
 #chatbot .message ol {
   margin: 8px 0;
   padding-left: 24px;
@@ -624,11 +688,203 @@
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   #chatbot .suggestion-button {
     width: 100%;
     white-space: normal;
     text-align: left;
   }
 }
+
+/* === Schedule Form === */
+.schedule-form-container {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.3s ease;
+}
+
+.schedule-form-container h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.schedule-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.cancel-button {
+  padding: 10px 16px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 6px;
+  color: #555;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.cancel-button:hover {
+  background-color: #e5e5e5;
+}
+
+.submit-button {
+  padding: 10px 16px;
+  background-color: var(--primary-color);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.submit-button:hover {
+  background-color: #0055b3;
+  transform: translateY(-1px);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+.form-error {
+  color: #d32f2f;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  background-color: rgba(211, 47, 47, 0.1);
+  border-radius: 4px;
+  border-left: 3px solid #d32f2f;
+}
+
+@media only screen and (max-width: 600px) {
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .cancel-button,
+  .submit-button {
+    width: 100%;
+  }
+}
+
+/* Add these styles to ensure the chat button is visible */
+.healthcare-ai-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--primary-color, #0066cc);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+.healthcare-ai-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.healthcare-ai-button svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* Greeting bubble styles */
+.healthcare-ai-greeting {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  max-width: 300px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 998;
+  transition: all 0.3s ease;
+}
+
+.healthcare-ai-greeting p {
+  margin: 0;
+  padding-right: 20px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.healthcare-ai-greeting .greeting-close {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.healthcare-ai-greeting.hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+
+/* Ensure the chatbot is hidden by default */
+#chatbot {
+  display: none;
+}
+
+#chatbot.hidden {
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  pointer-events: none;
+}
+
+
 
